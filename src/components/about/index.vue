@@ -9,7 +9,7 @@
 export default {
   data: function () {
     return {
-      b: "bbb-add",
+      b: "bbb-add  666",
     };
   },
   created() {
