@@ -13,8 +13,6 @@ export default {
     };
   },
   created() {
-
-    console.log(this.$bus);
     this.$bus.$emit('changeValue',this.b,'ddd')
   },
 };
