@@ -55,10 +55,25 @@ module.exports = {
     },
     devServer:{
         contentBase: path.resolve(__dirname, './dist'),
+        // watchContentBase:true, //监控目标文件有改动后会重载
+        watchOptions: {
+            //忽略文件
+            ignored: /node_modules/
+        },
         compress: true,
         port:3000,
         // open:true,
         hot:true,
-        publicPath: '/'
+        publicPath: '/',
+        // overlay: false, //缩写报错信息
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3000',
+                //发送请求时，请求路径重写：将/api/xxx  -->  /xxx (去掉/api)
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
+        }
     }
 }

@@ -15,7 +15,9 @@ module.exports = {
     entry: path.resolve(__dirname, './src/main.js'),
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'bundle-[name].js'
+        filename: 'js/bundle-[name].[contenthash:10].js',
+        chunkFilename: 'js/[name]_chunk.js',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -56,7 +58,9 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
+                exclude: /node_modules/,    //不匹配的目录
+                // enforce: 'pre', //post延后执行
+                include: path.resolve(__dirname, 'src'), //匹配的目录
                 use:{
                     loader: 'babel-loader',
                     options: {
@@ -97,11 +101,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'index.html'),
             filename: 'index.html',
+            title: 'webpack5 vue2.6',
             minify: {
                 collapseWhitespace: true,
                 removeComments: true
-            },
-            title: 'webpack5 vue2.6'
+            }
         }),
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
@@ -111,15 +115,23 @@ module.exports = {
         new OptimizeCssAssetsPlugin(),
         new CleanWebpackPlugin()
     ],
+    //解析模块的规则
     resolve:{
         alias:{
             'vue$':'vue/dist/vue.js',
             '@': path.resolve(__dirname, './src')
-        }
+        },
+        extensions: ['.js', '.json', '.jsx', '.vue'],
     },
     optimization: {
+        //分割代码
         splitChunks: {
             chunks: 'all'
+        },
+        //将当前模块 记录其他模块的hash单独打包为一个文件 runtime
+        //解决：修改a文件导致b文件的contenthash的变化
+        runtimeChunk: {
+            name: entryPoint =>  `runtime-${entryPoint.name}`
         }
     }
 }
