@@ -97,6 +97,9 @@ module.exports = {
             }
         ]
     },
+    cache: {
+        type: 'memory'
+    },
     plugins:[
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'index.html'),

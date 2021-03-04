@@ -40,6 +40,7 @@ module.exports = {
             }
         ]
     },
+
     plugins:[
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'index.html'),
@@ -51,19 +52,20 @@ module.exports = {
         alias:{
             'vue$':'vue/dist/vue.js',
             '@': path.resolve(__dirname, './src')
-        }
+        },
+        extensions: ['.js','.vue']
     },
     devServer:{
         contentBase: path.resolve(__dirname, './dist'),
-        // watchContentBase:true, //监控目标文件有改动后会重载
+        watchContentBase:true, //监控目标文件有改动后会重载
         watchOptions: {
             //忽略文件
             ignored: /node_modules/
         },
         compress: true,
         port:3000,
-        // open:true,
         hot:true,
+        open:true,
         publicPath: '/',
         // overlay: false, //缩写报错信息
         proxy: {

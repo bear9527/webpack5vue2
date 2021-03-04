@@ -1,5 +1,5 @@
 {
-  "name": "webpack5Vue2",
+  "name": "webpack5vue2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -39,19 +39,5 @@
     "element-ui": "^2.15.1",
     "vue": "^2.6.12",
     "vue-router": "^3.5.1"
-  },
-  "browserslist": {
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version",
-      "IE 10"
-    ],
-    "production": [
-      ">0.1%",
-      "IE 9",
-      "not dead",
-      "not op_mini all"
-    ]
   }
 }
