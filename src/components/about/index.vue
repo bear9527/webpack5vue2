@@ -1,11 +1,19 @@
 <template>
   <div class="about">
-    <div class="header"></div>
-
+    <div class="header">count {{count}}</div>
+    <button @click="subOne">-</button>
+    <button @click="subN">-N</button>
+    <input type="text" :value="count"> 
+    <button @click="addOne">+</button> 
+    <button @click="addN">+N</button> 
+    <hr>
+    {{viewCount}}
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   data: function () {
     return {
@@ -36,31 +44,83 @@ export default {
     });
 
 
- // 手写Promise.all()
-
+  // 手写Promise.all()
   let promiseAll = function(promisList){
-    let conter = 0;
+    const promisLists= Array.from(promisList);
+    const promisListsLen = promisLists.length;
+    let count = 0;
     const defaultList = [];
     return new Promise((resolve,reject)=>{
-
+      promisLists.forEach((p,index)=>{
+        // console.log(p,index)
+        p.then(function(str){
+          defaultList[index] = str;
+          count++;
+          console.log(promisListsLen,count);
+          if(count >= promisListsLen){
+              resolve(defaultList)
+          }
+        });
+      })
     })
   }
 
+  promiseAll([p1,p2,p3]).then(function(defaultS){
+    console.log('promiseAll then',defaultS)
+  });
 
 
+  // console.log('this.$store.state.count',this.$store.state.count)
+  // console.log(...mapState)
+// axios.defaults.baseURL = 'http://localhost:3000/';
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+// axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
 
+axios({
+  method:'get',
+  url:'/api/test.json'
+}).then((res)=>{
 
-
+  console.log('res',res)
+      // this.$store.commit("subStateN",res.status);
+      this.$store.dispatch("addNAsync",res.status);
+})
 
     //通过中央总线传值
     this.$bus.$emit("changeValue", this.b, "ddd");
+  },
+  computed:{
+    ...mapState(['count']),
+    ...mapGetters(['viewCount'])
+  },
+  methods: {
+    ...mapMutations(["addStateOne","subStateOne","addStateN","subStateN"]),
+    ...mapActions(["addNAsync"]),
+    addOne(){
+      // this.addStateOne();
+      this.$store.commit("addStateOne");
+    },
+    subOne(){
+      this.subStateOne(123);
+    }, 
+    addN(){
+      this.addNAsync(3);
+      // this.$store.dispatch("addNAsync",3);
+    },
+    subN(){
+      // this.subStateOne();
+      
+      this.$store.commit("subStateN",3);
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .about {
-  width: 500px;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
   height: 500px;
   background-color: aquamarine;
   // background-image: url('../../assets/images/2.jpg');

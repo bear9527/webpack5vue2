@@ -3,14 +3,18 @@
     <router-link to="/">首页</router-link>
     <router-link to="/about">关于我们</router-link>
     <div class="search-wrapper">
-        <input type="text" class="search">
+        <input type="text" class="search" :value="count">
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-    name:'Header'
+    name:'Header',
+    computed: {
+        ...mapState(['count'])
+    }
 }
 </script>
 
