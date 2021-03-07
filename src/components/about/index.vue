@@ -1,118 +1,119 @@
 <template>
   <div class="about">
-    <div class="header">count {{count}}</div>
+    <div class="header">count {{ count }}</div>
     <button @click="subOne">-</button>
     <button @click="subN">-N</button>
-    <input type="text" :value="count"> 
-    <button @click="addOne">+</button> 
-    <button @click="addN">+N</button> 
-    <hr>
-    {{viewCount}}
+    <input type="text" :value="count" />
+    <button @click="addOne">+</button>
+    <button @click="addN">+N</button>
+    <hr />
+    {{ viewCount }}
+    <br>
+    {{getData}}
+    <hr />
+    <button @click="GET">GET</button>
+    <button @click="POST">POST</button>
+    <button @click="PUT">PUT</button>
+    <button @click="DELETE">DELETE</button>
+
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+// import axios from "axios";
+import {http} from '@/assets/js/http.js'
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   data: function () {
     return {
-      b: "bbb-add  111",
-      arr: [1, 2, 3, 4, 5, 6, 7],
-      aaa: {
-        a: "a",
-        b: undefined,
-      },
+      getData: {},
     };
   },
   mounted() {
     // debugger;
-    var p1 = new Promise((resolve, reject) => {
-      setTimeout(function () {
-        resolve("a");
-      }, 4000);
-    });
-    var p2 = new Promise((resolve, reject) => {
-      setTimeout(function () {
-        resolve("b");
-      }, 1000);
-    });
-    var p3 = new Promise((resolve, reject) => {
-      setTimeout(function () {
-        resolve("c");
-      }, 1000);
-    });
 
 
-  // 手写Promise.all()
-  let promiseAll = function(promisList){
-    const promisLists= Array.from(promisList);
-    const promisListsLen = promisLists.length;
-    let count = 0;
-    const defaultList = [];
-    return new Promise((resolve,reject)=>{
-      promisLists.forEach((p,index)=>{
-        // console.log(p,index)
-        p.then(function(str){
-          defaultList[index] = str;
-          count++;
-          console.log(promisListsLen,count);
-          if(count >= promisListsLen){
-              resolve(defaultList)
-          }
-        });
-      })
-    })
-  }
-
-  promiseAll([p1,p2,p3]).then(function(defaultS){
-    console.log('promiseAll then',defaultS)
-  });
 
 
-  // console.log('this.$store.state.count',this.$store.state.count)
-  // console.log(...mapState)
-// axios.defaults.baseURL = 'http://localhost:3000/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
-
-axios({
-  method:'get',
-  url:'/api/test.json'
-}).then((res)=>{
-
-  console.log('res',res)
-      // this.$store.commit("subStateN",res.status);
-      this.$store.dispatch("addNAsync",res.status);
-})
-
-    //通过中央总线传值
-    this.$bus.$emit("changeValue", this.b, "ddd");
   },
-  computed:{
-    ...mapState(['count']),
-    ...mapGetters(['viewCount'])
+  computed: {
+    ...mapState(["count"]),
+    ...mapGetters(["viewCount"]),
   },
   methods: {
-    ...mapMutations(["addStateOne","subStateOne","addStateN","subStateN"]),
+    ...mapMutations(["addStateOne", "subStateOne", "addStateN", "subStateN"]),
     ...mapActions(["addNAsync"]),
-    addOne(){
+    addOne() {
       // this.addStateOne();
       this.$store.commit("addStateOne");
     },
-    subOne(){
+    subOne() {
       this.subStateOne(123);
-    }, 
-    addN(){
+    },
+    addN() {
       this.addNAsync(3);
       // this.$store.dispatch("addNAsync",3);
     },
-    subN(){
+    subN() {
       // this.subStateOne();
-      
-      this.$store.commit("subStateN",3);
+      this.$store.commit("subStateN", 3);
+    },
+    GET(){
+      http({
+        method: "get",
+        url: "/posts",
+        params: {
+          id:2
+        }
+      }).then((response) => {
+        this.$nextTick(function(){
+          console.log("res qqq", response);
+        });
+        this.getData = response.data;
+      },(error)=>{
+        console.log(error)
+      });
+    },
+    POST(){
+      http({
+        method: "POST",
+        url: "/posts",
+        data: {
+          "title": "json-server888", "author": "typicode888"
+        }
+      }).then((res) => {
+        console.log("res", res);
+        // this.$store.commit("subStateN",res.status);
+        // this.$store.dispatch("addNAsync", res.profile.name);
+        this.getData = res.data;
+      });
+    },
+    PUT(){
+      http({
+        method: "PUT",
+        url: "/posts/3",
+        data: {
+          "title": "json-server777", "author": "typicode777"
+        }
+      }).then((res) => {
+        console.log("res", res);
+        this.getData = res.data;
+      });
+    },
+    DELETE(){
+      http({
+        method: "DELETE",
+        url: "/posts/",
+        params: {
+          id:4
+        }
+      }).then((response) => {
+        console.log("DELETE", response);
+      },(error)=>{
+        console.log(error)
+      });
     }
-  }
+  },
 };
 </script>
 

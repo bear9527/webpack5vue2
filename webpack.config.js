@@ -60,17 +60,17 @@ module.exports = {
         watchContentBase:true, //监控目标文件有改动后会重载
         watchOptions: {
             //忽略文件
-            ignored: /node_modules/
+            ignored: ['/node_modules/', '/dist/']
         },
         compress: true,
         port:3000,
         hot:true,
         open:true,
         publicPath: '/',
-        // overlay: false, //缩写报错信息
+        overlay: false, //缩写报错信息
         // proxy: {
         //     '/api': {
-        //         target: 'http://localhost:3000',
+        //         target: 'http://localhost:3001',
         //         //发送请求时，请求路径重写：将/api/xxx  -->  /xxx (去掉/api)
         //         pathRewrite: {
         //             '^/api': ''
