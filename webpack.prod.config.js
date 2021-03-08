@@ -81,14 +81,14 @@ module.exports = {
                             ]
                         ],
                         //利用 @babel/plugin-transform-runtime 插件还能以沙箱垫片的方式防止污染全局， 并抽离公共的 helper function , 以节省代码的冗余
-                        "plugins": [
-                            [
-                                "@babel/plugin-transform-runtime",
-                                {
-                                    "corejs": 3
-                                }
-                            ]
-                        ],
+                        // "plugins": [
+                        //     [
+                        //         "@babel/plugin-transform-runtime",
+                        //         {
+                        //             "corejs": 3
+                        //         }
+                        //     ]
+                        // ],
                         // 开启babel缓存
                         // 第二次构建时，会读取之前的缓存
                         cacheDirectory: true

@@ -11,7 +11,7 @@ import Bus from './assets/js/bus.js'
 
 Vue.use(ElementUi)
 Vue.use(Bus)
-const app = new Vue({
+new Vue({
     el: '#root',
     store,
     router,

@@ -60,7 +60,7 @@ module.exports = {
         watchContentBase:true, //监控目标文件有改动后会重载
         watchOptions: {
             //忽略文件
-            ignored: ['/node_modules/', '/dist/']
+            ignored: ['/node_modules/', '/api/']
         },
         compress: true,
         port:3000,

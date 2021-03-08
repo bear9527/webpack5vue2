@@ -11,10 +11,12 @@
     <br>
     {{getData}}
     <hr />
-    <button @click="GET">GET</button>
-    <button @click="POST">POST</button>
-    <button @click="PUT">PUT</button>
-    <button @click="DELETE">DELETE</button>
+    <button v-permission="1" @click="GET">GET</button>
+    <button v-permission="1" @click="GET">GET</button>
+    <button v-permission="2" @click="POST">POST</button>
+    <button v-permission="3" @click="PUT">PUT</button>
+    <button v-permission="'demo'" @click="DELETE">DELETE</button>
+    <button v-permission="" @click="DELETE">ddd</button>
 
   </div>
 </template>
@@ -22,17 +24,24 @@
 <script>
 // import axios from "axios";
 import {http} from '@/assets/js/http.js'
+import '@/assets/js/directive.js'
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   data: function () {
     return {
-      getData: {},
+      getData: {}
     };
   },
   mounted() {
     // debugger;
 
-
+  new Promise((resolve)=>{
+    setTimeout(function(){
+      resolve(123);
+    },3000)
+  }).then(function(str){
+    console.log(str)
+  })
 
 
   },
@@ -83,8 +92,6 @@ export default {
         }
       }).then((res) => {
         console.log("res", res);
-        // this.$store.commit("subStateN",res.status);
-        // this.$store.dispatch("addNAsync", res.profile.name);
         this.getData = res.data;
       });
     },
