@@ -2,6 +2,8 @@
   <div class="header">
     <router-link to="/">首页</router-link>
     <router-link to="/about">关于我们</router-link>
+    <router-link to="/about2">关于我们2</router-link>
+    <router-link to="/test">测试</router-link>
     <div class="search-wrapper">
         <input type="text" class="search" :value="count">
     </div>
