@@ -1,8 +1,8 @@
 <template>
   <div class="about">
-    <div class="header">title: {{title}}</div>
-    <input type="text" value="" v-model="newTitle">
-    <button @click="titleChange">改变title</button>
+    <div class="header">{{title}}</div>
+    <input type="text" value="d" v-model="newtitle">
+    <button @click="clickBtn">改变title</button>
   </div>
 </template>
 
@@ -10,25 +10,29 @@
 import { mapState, mapMutations} from "vuex";
 
 export default {
-  name:'about',
+  name:'test',
+  isVuex:true,
   data: function () {
     return {
-      newTitle: '-'
+      newtitle: '-'
     };
   },
   mounted() {
     // debugger;
-
+console.log(this.$store.state);
     
   },
   computed: {
-    ...mapState(['title'])
+    ...mapState({
+      title: state => state.test,
+      })
   },
   methods: {
     ...mapMutations(['titleChange']),
     clickBtn(){
-      this.titleChange(this.newTitle);
+      // this.titleChange(this.newTitle);
       // this.commit("titleChange",this.newTitle)
+      this.$store.commit("titleChange", this.newtitle);
     }
   },
 };

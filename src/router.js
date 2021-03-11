@@ -7,7 +7,8 @@ Vue.use(VueRouter);
 
 const Home = () => import('./components/home/index.vue')
 // const About = () => import('./components/about/index.vue')
-const About = resolve => require(['@/components/about/index.vue'], resolve),
+const About = resolve => require(['@/components/about/index.vue'], resolve)
+const Test = resolve => require(['@/components/test/index.vue'], resolve)
 
 
 // const Home = () => import(/* webpackChunkName: "Home" */ './components/home/index.vue')

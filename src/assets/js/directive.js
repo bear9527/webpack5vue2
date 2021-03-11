@@ -1,3 +1,7 @@
+/*
+鉴权指令
+*/
+
 import Vue from 'vue';
 import { rolesInclude } from '@/assets/js/include';
 const permission = Vue.directive('permission', {
