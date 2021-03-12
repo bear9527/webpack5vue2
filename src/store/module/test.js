@@ -1,7 +1,11 @@
 var test = {
-    state: ()=> ({
+    namespaced:true,
+    // state: ()=> ({
+    //     title: '我是vuex-test 我是test title'
+    // }),
+    state: {
         title: '我是vuex-test 我是test title'
-    }),
+    },
     mutations: {
         titleChange(state,str){
             console.log('我是vuex titleChange',str)

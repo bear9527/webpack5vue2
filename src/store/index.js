@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+//测试在此引入模块vuex是否为按需加载
+// import about from './module/about'
+// import test from './module/test'
+// const about = () => import(/* webpackChunkName: "Test" */ './module/about')
+// const test = () => import(/* webpackChunkName: "Test" */ './module/test')
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -36,6 +42,10 @@ export default new Vuex.Store({
         viewCount(state){
             return `这是我的一个数据：${state.count}`
         }
-    }
+    },
+    // modules: {
+    //     about,
+    //     test
+    // }
 })
     

@@ -8,27 +8,41 @@
 
 <script>
 import { mapState, mapMutations} from "vuex";
-
+// import { createNamespacedHelpers } from 'vuex'
+// const { mapState, mapMutations } = createNamespacedHelpers('test')
 export default {
-  name:'test',
-  isVuex:true,
+  name: 'test',
+  isVuex: true,
   data: function () {
     return {
+      title:'old',
       newtitle: '-'
     };
   },
   mounted() {
     // debugger;
-console.log(this.$store.state);
-    
+    console.log(this.$store.state);
+    console.log(this.$options.name,this.$options.isVuex);
+    // this.title = this.$store.state.test
+
+        try{
+            console.log(this.$store.state);
+            this.title = this.$store.state.test.title;
+            console.log('sss',this.$store.state.test.title)
+        }catch{
+            console.log('还未获取')
+        }
+  },
+  destroyed(){
+    console.log(this.$options.name,'销毁了')
   },
   computed: {
-    ...mapState({
-      title: state => state.test,
-      })
+    // ...mapState('test', {
+    //   title: state => state.title
+    // })
   },
   methods: {
-    ...mapMutations(['titleChange']),
+    ...mapMutations('test',['titleChange']),
     clickBtn(){
       // this.titleChange(this.newTitle);
       // this.commit("titleChange",this.newTitle)

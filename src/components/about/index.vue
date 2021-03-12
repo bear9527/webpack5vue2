@@ -10,7 +10,8 @@
 import { mapState, mapMutations} from "vuex";
 
 export default {
-  name:'about',
+  name: 'about',
+  isVuex: true,
   data: function () {
     return {
       newTitle: '-'
@@ -22,7 +23,9 @@ export default {
     
   },
   computed: {
-    ...mapState(['title'])
+    ...mapState({
+      title: state => state.about,
+    })
   },
   methods: {
     ...mapMutations(['titleChange']),

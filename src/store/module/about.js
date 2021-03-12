@@ -1,7 +1,8 @@
 const about = {
-    state:()=>{
-        title: '我是vuex-about 我是about title'
-    },
+    namespaced:true,
+    state: ()=> ({
+        title: '我是vuex-test 我是test title'
+    }),
     mutations: {
         titleChange(state,str){
             state.title = str;
