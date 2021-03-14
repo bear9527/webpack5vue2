@@ -1,59 +1,70 @@
 <template>
-  <div class="about">
-    <div class="header">{{title}}</div>
+  <div class="test">
+    <div class="header" v-html="title"></div>
     <input type="text" value="d" v-model="newtitle">
     <button @click="clickBtn">改变title</button>
+    <hr>
+
+    
+    <span>id:{{ $route.params.id }}</span><br>
+    <router-link to="/test/fff">link2</router-link>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations} from "vuex";
+import { mapState, mapMutations, mapGetters} from "vuex";
 // import { createNamespacedHelpers } from 'vuex'
-// const { mapState, mapMutations } = createNamespacedHelpers('test')
+// const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('test')
 export default {
   name: 'test',
   isVuex: true,
   data: function () {
     return {
-      title:'old',
+      // title:'old',
       newtitle: '-'
     };
   },
   mounted() {
     // debugger;
-    console.log(this.$store.state);
-    console.log(this.$options.name,this.$options.isVuex);
-    // this.title = this.$store.state.test
-
-        try{
-            console.log(this.$store.state);
-            this.title = this.$store.state.test.title;
-            console.log('sss',this.$store.state.test.title)
-        }catch{
-            console.log('还未获取')
-        }
+    console.log(this.$route)
+        // try{
+        //     console.log(this.$store.state);
+        //     this.title = this.$store.state.test.title;
+        //     console.log('sss',this.$store.state.test.title)
+        // }catch{
+        //     console.log('还未获取')
+        // }
   },
   destroyed(){
     console.log(this.$options.name,'销毁了')
   },
   computed: {
-    // ...mapState('test', {
-    //   title: state => state.title
-    // })
+    ...mapState({
+      'title':(state) => {
+        //如果为空返回空
+        if(!state.test){return ''}
+        return state.test.title;
+      },
+    })
   },
   methods: {
-    ...mapMutations('test',['titleChange']),
+    // ...mapMutations(['titleChange']),
     clickBtn(){
       // this.titleChange(this.newTitle);
-      // this.commit("titleChange",this.newTitle)
-      this.$store.commit("titleChange", this.newtitle);
+      this.$store.commit("test/titleChange", this.newtitle);
     }
   },
+  beforeRouteUpdate (to, from, next) {
+    // react to route changes...
+    // don't forget to call next()
+    console.log('beforeRouteUpdate', to);
+    next()
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.about {
+.test {
   width: 100%;
   max-width: 540px;
   margin: 0 auto;

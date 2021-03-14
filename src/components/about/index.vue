@@ -1,8 +1,10 @@
 <template>
   <div class="about">
-    <div class="header">title: {{title}}</div>
-    <input type="text" value="" v-model="newTitle">
-    <button @click="titleChange">改变title</button>
+    <!-- <div class="header">title: {{title}}</div> -->
+    <div class="header" v-html="title"></div>
+    <input type="text" v-model="newtitle">
+    <button @click="clickBtn">改变title</button>
+    <div>{{ $route.params.pathMatch }}</div>
   </div>
 </template>
 
@@ -14,24 +16,28 @@ export default {
   isVuex: true,
   data: function () {
     return {
-      newTitle: '-'
+      newtitle: '-'
     };
   },
   mounted() {
     // debugger;
-
+    console.log(this.$route.params.pathMatch)
     
   },
   computed: {
     ...mapState({
-      title: state => state.about,
+      title: (state) => {
+        //如果为空返回空
+        if(!state.about){return ''}
+        return state.about.title;
+      }
     })
   },
   methods: {
-    ...mapMutations(['titleChange']),
+    // ...mapMutations(['titleChange']),
     clickBtn(){
-      this.titleChange(this.newTitle);
-      // this.commit("titleChange",this.newTitle)
+      // this.titleChange(this.newTitle);
+      this.$store.commit("about/titleChange",this.newtitle);
     }
   },
 };

@@ -41,19 +41,5 @@
     "vue": "^2.6.12",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
-  },
-  "browserslist": {
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version",
-      "IE 10"
-    ],
-    "production": [
-      ">0.1%",
-      "IE 9",
-      "not dead",
-      "not op_mini all"
-    ]
   }
 }
