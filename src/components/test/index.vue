@@ -8,6 +8,9 @@
     
     <span>id:{{ $route.params.id }}</span><br>
     <router-link to="/test/fff">link2</router-link>
+    <hr>
+    <h1>{{ sumNumber }}</h1>
+    <!-- <h1>{{ sumNumber2 }}</h1> -->
   </div>
 </template>
 
@@ -21,7 +24,10 @@ export default {
   data: function () {
     return {
       // title:'old',
-      newtitle: '-'
+      newtitle: '-',
+      a:1,
+      b:2,
+      c:0
     };
   },
   mounted() {
@@ -34,6 +40,13 @@ export default {
         // }catch{
         //     console.log('还未获取')
         // }
+        this.$nextTick(()=>{
+          console.log("nextTick")
+        })
+        setTimeout(()=>{
+          console.log('this.sumNumber',this.sumNumber)
+          console.log('this.a',this.a)
+        },2000)
   },
   destroyed(){
     console.log(this.$options.name,'销毁了')
@@ -45,7 +58,32 @@ export default {
         if(!state.test){return ''}
         return state.test.title;
       },
-    })
+    }),
+    sumNumber(){
+      this.c = this.a + this.b;
+      setTimeout(()=>{
+        console.log('computed',this.c)
+      },1000)
+      return this.c;
+    }
+  },
+  watch:{
+    
+    a:{
+      handler:function(str){
+        this.c = this.a + this.b;
+        setTimeout(()=>{
+          console.log('watch',this.c);
+        },1000)
+      },
+      immediate: true
+    },
+    b:function(str){
+      this.c = this.a + this.b;
+      setTimeout(()=>{
+        console.log('watch',this.c);
+      },1000)
+    },
   },
   methods: {
     // ...mapMutations(['titleChange']),
